@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Open Space</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .control-panel {
+            background: linear-gradient(red, orange);
+            height: 50vh;
+            width: auto;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .password {
+            border: 1px solid black;
+        }
+
+        .check-buttons, .levers {
+            display: flex;
+        }
+
+        .ok {
+            background-color: white;
+        }
+
+        .launch {
+            border: 10px solid black;
+            background-color: red;
+            color: white;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            document.querySelector("body").removeChild(document.querySelector("body script"));
+
+            // document.querySelectorAll(".check-buttons input").forEach(ipt => {
+            //     ipt.disabled = true;
+            // });
+            // document.querySelectorAll(".levers input").forEach(ipt => {
+            //     ipt.disabled = true;
+            // });
+            // document.querySelector(".launch").disabled = true;
+
+
+            document.querySelectorAll("div.check-buttons input").forEach(item => {
+                item.addEventListener("click", function () {
+                    item.toggleAttribute("checked");
+                });
+            });
+
+            document.querySelector(".ok").addEventListener("click", function () {
+                let val = document.querySelector(".password").value;
+                console.log(val);
+
+                if (val === "TrustNo1") {
+                    document.querySelectorAll(".check-buttons input").forEach(ipt => {
+                        ipt.removeAttribute("disabled");
+                    });
+                    document.querySelectorAll(".levers input").forEach(ipt => {
+                        ipt.removeAttribute("disabled");
+                    });
+                }
+            });
+
+            // document.querySelectorAll("div.levers input").forEach(item => {
+            //     item.onchange = function () {
+            //         let value = item.value;
+            //         console.log(value);
+                // }
+            // });
+            document.querySelector(".control-panel__inner").onchange = function () {
+                let lengthOfCheck = document.querySelectorAll("div.check-buttons input[checked]").length;
+                // console.log(lengthOfCheck);
+
+                let inputList = document.querySelectorAll("div.levers input");
+                let sum = 0;
+                inputList.forEach((item, index) => {
+                    sum = Number(item.value) + sum;
+                    // console.log(sum);
+                });
+
+                if (lengthOfCheck === 6 && sum === 500) {
+                    console.log("launch");
+                    document.querySelector(".launch").removeAttribute("disabled");
+                }
+
+            };
+            console.log(document.querySelector(".control-panel__inner").onchange === null);
+            console.log(document.querySelector(".levers input").onchange === null);
+        }
+        function f() {
+
+        }
+    </script>
+</head>
+<body>
+<div class="space">
+    <div class="planet-area">
+        <img src="" alt="" class="rocket">
+        <img src="" alt="" class="planet">
+    </div>
+    <div class="control-panel">
+        <div class="control-panel__inner">
+            <input type="password" class="password" placeholder="Enter password to unlock">
+            <input type="button" class="ok" value="ok">
+            <div class="check-buttons">
+                <input type="checkbox" disabled>
+                <input type="checkbox" disabled>
+                <input type="checkbox" disabled>
+                <input type="checkbox" disabled>
+                <input type="checkbox" disabled>
+                <input type="checkbox" disabled>
+            </div>
+            <div class="levers">
+                <input type="range" disabled onchange="f()">
+                <input type="range" disabled onchange="f()">
+                <input type="range" disabled onchange="f()">
+                <input type="range" disabled onchange="f()">
+                <input type="range" disabled onchange="f()">
+            </div>
+            <input type="button" class="launch" value="launch" disabled>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
